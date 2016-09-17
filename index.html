@@ -6,6 +6,8 @@
  
 <script>
 
+
+
 	function speak(text, callback) {
 		var u = new SpeechSynthesisUtterance();
 		u.text = text;
@@ -30,23 +32,41 @@
  
 
     speak('Let me know when you are ready to begin', function () {
+	
+		var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+		var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
+		var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
+		var grammar = '#JSGF V1.0; grammar ready; public <ready> = ready | go | okay ;';
 
-		var recognition = new webkitSpeechRecognition();
-		recognition.continuous = true;
-		recognition.interimResults = true;
-	 
-		recognition.onresult = function (e) {
-			var textarea = document.getElementById('results');
-			for (var i = e.resultIndex; i < e.results.length; ++i) {
-				if (e.results[i].isFinal) {
-					log(e.results[i][0].transcript);
-					console.log(e.results[i][0].transcript);
-				}
-			}
+		var recognition = new SpeechRecognition();
+		var speechRecognitionList = new SpeechGrammarList();
+		speechRecognitionList.addFromString(grammar, 1);
+		recognition.grammars = speechRecognitionList;
+		//recognition.continuous = false;
+		recognition.lang = 'en-US';
+		recognition.interimResults = false;
+		recognition.maxAlternatives = 1;
+ 
+		recognition.onresult = function (event) {
+			log(event.results[0][0].transcript);
+		}
+		
+		recognition.onspeechend = function() {
+			log('stopped');
+			recognition.stop();
+		}
+
+		recognition.onnomatch = function(event) {
+			log('no match');
+		}
+
+		recognition.onerror = function(event) {
+			log('error: ' + event.error);
 		}
 	 
 		// start listening
 		recognition.start();
+		log('listening...');
     });
 
 	
