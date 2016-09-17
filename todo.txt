@@ -1,0 +1,14 @@
+voice commands
+video recording
+bluetooth integration
+data upload
+sync location
+create profile
+
+record a set of a workout
+	record video
+	collect bluetooth info
+watch workout set
+	change view
+	display biometrics
+
