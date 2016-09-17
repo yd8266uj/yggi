@@ -109,7 +109,7 @@
 			console.log(event);
 			var command = event.results[0][0].transcript;
 			log(command);
-			if( '' == command ) {
+			if( 'begin' == command ) {
 				navigator.getUserMedia(constraints, startRecording, errorCallback);
 			}
 			if( 'end' == command ) {
