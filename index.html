@@ -10,6 +10,7 @@
 		var u = new SpeechSynthesisUtterance();
 		u.text = text;
 		u.lang = 'en-US';
+		u.voice = 'Google US English';
 	 
 		u.onend = function () {
 			if (callback) {
@@ -29,7 +30,7 @@
  
 
     speak('Let me know when you are ready to begin', function () {
-        // get answer
+
 		var recognition = new webkitSpeechRecognition();
 		recognition.continuous = true;
 		recognition.interimResults = true;
@@ -38,7 +39,7 @@
 			var textarea = document.getElementById('results');
 			for (var i = e.resultIndex; i < e.results.length; ++i) {
 				if (e.results[i].isFinal) {
-					document.getElementById("log").innerHTML += e.results[i][0].transcript;
+					log(e.results[i][0].transcript);
 					console.log(e.results[i][0].transcript);
 				}
 			}
@@ -48,6 +49,11 @@
 		recognition.start();
     });
 
+	
+	function log(string) {
+		var log = document.getElementById('log');
+		log.innerHTML = string + '<br>' + log.innerHTML;
+	}
 </script>
 </body>
 </html>
