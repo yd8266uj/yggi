@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<body>
+<textarea id="results" cols="80" rows="5"></textarea>
+ 
+<script>
+
+	function speak(text, callback) {
+		var u = new SpeechSynthesisUtterance();
+		u.text = text;
+		u.lang = 'en-US';
+	 
+		u.onend = function () {
+			if (callback) {
+				callback();
+			}
+		};
+	 
+		u.onerror = function (e) {
+			if (callback) {
+				callback(e);
+			}
+		};
+	 
+		speechSynthesis.speak(u);
+	}
+ 
+ 
+
+    speak('Let me know when you are ready to begin', function () {
+        // get answer
+		var recognition = new webkitSpeechRecognition();
+		recognition.continuous = true;
+		recognition.interimResults = true;
+	 
+		recognition.onresult = function (e) {
+			var textarea = document.getElementById('results');
+			for (var i = e.resultIndex; i < e.results.length; ++i) {
+				if (e.results[i].isFinal) {
+					textarea.value += e.results[i][0].transcript;
+				}
+			}
+		}
+	 
+		// start listening
+		recognition.start();
+    });
+
+</script>
+</body>
+</html>
