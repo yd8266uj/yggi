@@ -94,7 +94,7 @@
 		var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 		var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
 		var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
-		var grammar = '#JSGF V1.0; grammar commands; public <command> = go | okay ;';
+		var grammar = '#JSGF V1.0; grammar commands; public <command> = begin | end ;';
 
 		var recognition = new SpeechRecognition();
 		var speechRecognitionList = new SpeechGrammarList();
@@ -106,13 +106,19 @@
 		recognition.maxAlternatives = 1;
  
 		recognition.onresult = function (event) {
-			log(event.results[0][0].transcript);
-			navigator.getUserMedia(constraints, startRecording, errorCallback);
+			var command = event.results[0][0].transcript;
+			log(command);
+			if( 'begin' == command ) {
+				navigator.getUserMedia(constraints, startRecording, errorCallback);
+			}
+			if( 'end' == command ) {
+				mediaRecorder.stop();
+			}
 		}
 		
 		recognition.onspeechend = function() {
-			log('stopped');
-			recognition.stop();
+			//log('stopped');
+			//recognition.stop();
 		}
 
 		recognition.onnomatch = function(event) {
