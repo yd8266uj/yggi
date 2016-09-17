@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<div id="version">-a2</div>
+<div id="version">-a5</div>
 <div id="log"></div>
  
 <script>
@@ -42,7 +42,7 @@
 		var speechRecognitionList = new SpeechGrammarList();
 		speechRecognitionList.addFromString(grammar, 1);
 		recognition.grammars = speechRecognitionList;
-		recognition.continuous = false;
+		recognition.continuous = true;
 		recognition.lang = 'en-US';
 		recognition.interimResults = false;
 		recognition.maxAlternatives = 1;
