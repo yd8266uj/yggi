@@ -8,7 +8,9 @@
 		var constraints = {"audio": false, "video": { "mandatory": { "minWidth": 320, "maxWidth": 320, "minHeight": 240,"maxHeight": 240 }, "optional": [] } };
 //		var constraints = {audio: true,video: { width: { min: 320, ideal: 320, max: 1280 }, height: { min: 240, ideal: 240, max: 720 }}}; 
  
-	
+	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+	var videoElement = document.querySelector('video');
+	videoElement.controls = false;
 	if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia) {
       alert('Sorry! This demo requires Firefox 30 and up or Chrome 47 and up.');
     }
@@ -36,7 +38,7 @@
 	}
 	function errorCallback() {}
 	function startRecording(stream) {
-		log('Starting...');
+		log('Starting camera...');
 		mediaRecorder = new MediaRecorder(stream);
 
 		mediaRecorder.start();
