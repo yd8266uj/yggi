@@ -89,7 +89,7 @@
  
  
 
-    speak('Let me know when you are ready to start', function () {
+    speak('Let me know when you are ready to begin', function () {
 	
 		var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 		var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
@@ -107,7 +107,7 @@
  
 		recognition.onresult = function (event) {
 			console.log(event);
-			var command = event.results[event.resultIndex][0].transcript;
+			var command = event.results[event.resultIndex][0].transcript.trim();
 			log(command);
 			if( 'begin' == command ) {
 				navigator.getUserMedia(constraints, startRecording, errorCallback);
