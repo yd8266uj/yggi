@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<!--Import Google Icon Font-->
+			<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<!-- Compiled and minified CSS -->
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+			<!--Let browser know website is optimized for mobile-->
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<style>
+			header, main, footer {
+      padding-left: 300px;
+    }
+
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
+	
+	  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+			
+			</style>
+		</head>
+
+		<body>
+	<ul id="" class="side-nav fixed grey darken-4">
+    <li><div class="userView">
+      <img class="background" src="images/office.jpg">
+      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+      <a href="#!name"><span class="yellow-text name">John Doe</span></a>
+      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a href="#!" class="white-text"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!" class="white-text">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader yellow-text lighten-4">Past Workouts</a></li>
+    <li><a class="waves-effect white-text" href="#!">Yesterday</a></li>
+	<li><a class="waves-effect white-text" href="#!">Tuesday</a></li>
+	<li><a class="waves-effect grey-text lighten-4" href="#!">More...</a></li>
+  </ul>
+  
+  <ul id="slide-out" class="hide-on-large-only side-nav fixed grey darken-4">
+    <li><div class="userView">
+      <img class="background" src="images/office.jpg">
+      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+      <a href="#!name"><span class="yellow-text name">John Doe</span></a>
+      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a href="#!" class="white-text"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!" class="white-text">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader yellow-text lighten-4">Past Workouts</a></li>
+    <li><a class="waves-effect white-text" href="#!">Yesterday</a></li>
+	<li><a class="waves-effect white-text" href="#!">Tuesday</a></li>
+	<li><a class="waves-effect grey-text lighten-4" href="#!">More...</a></li>
+  </ul>
+ 
+  <header class="page-header">
+  <nav class="grey darken-3">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo center">Logo</a>
+      <ul id="nav-mobile" class="right">
+        <li><a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a></li>
+      </ul>
+    </div>
+  </nav>
+  </header>
+			<main>
+			 <div class="parallax-container valign-wrapper">
+				<div class="parallax hide-on-small-only "><img src="https://images.alphacoders.com/692/692037.jpg"></div>
+				<div class="valign container section">
+					<h4>Workout Summary</h4>
+					<table class="highlight">
+        <thead>
+          <tr>
+              <th data-field="id">Name</th>
+              <th data-field="name">Item Name</th>
+              <th data-field="price">Item Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td>$3.76</td>
+          </tr>
+          <tr>
+            <td>Jonathan</td>
+            <td>Lollipop</td>
+            <td>$7.00</td>
+          </tr>
+        </tbody>
+      </table>
+					<a class="btn waves-effect center-align white grey-text darken-text-2">button</a>
+				</div>
+			</div>
+				<div class="section">
+				<div class="row container">
+				
+					<h4>Workout Details</h4>
+					<ul class="collapsible" data-collapsible="accordion">
+						<li>
+							<div class="collapsible-header active">Squat</div>
+							<div class="collapsible-body">
+								<div class="carousel carousel-slider center" data-indicators="true">
+									<div class="carousel-fixed-item center">
+									  <a class="btn waves-effect white grey-text darken-text-2">button</a>
+									  <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large red">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
+									</div>
+									<div class="carousel-item red white-text" href="#one!" style="height:500px">
+									  <h2>Front</h2>
+									  <p class="white-text">00:12:36</p>
+									</div>
+									<div class="carousel-item amber white-text" href="#two!" style="height:500px">
+									  <h2>Side</h2>
+									  <p class="white-text">00:12:36</p>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">Bench</div>
+							<div class="collapsible-body" >
+								<div class="carousel carousel-slider center" data-indicators="true">
+									<div class="carousel-fixed-item center">
+									  <a class="btn waves-effect white grey-text darken-text-2">button</a>
+									</div>
+									<div class="carousel-item red white-text" href="#one!">
+									  <h2>Front</h2>
+									  <p class="white-text">00:12:36</p>
+									</div>
+									<div class="carousel-item amber white-text" href="#two!">
+									  <h2>Side</h2>
+									  <p class="white-text">00:12:36</p>
+									</div>
+								</div>
+							</div>
+						</li>
+				</div>
+				</div>
+				<div class="parallax-container hide-on-small-only valign-wrapper section">
+				<div class="parallax"><img src="http://az616578.vo.msecnd.net/files/2016/08/09/636063495775359621-1507709868_gym-1040985_960_720.jpg"></div>
+					<div class="valign container section">
+						<h4>Workout Analytics</h4>
+					</div>
+				</div>
+			</main>
+			<footer class="page-footer grey darken-3">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+          </div>
+        </footer>
+            
+			<!--Import jQuery before materialize.js-->
+			<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+			<!-- Compiled and minified JavaScript -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+			<script>
+				$( document ).ready(function() {
+					$('.carousel.carousel-slider').carousel({full_width: true});
+					$(".button-collapse").sideNav();
+					$('.parallax').parallax();
+				});
+			</script>
+		</body>
+	</html>
+        
+		
+        
