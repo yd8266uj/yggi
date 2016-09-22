@@ -2,7 +2,7 @@
 	<html>
 		<head>
 			<!--Import Google Icon Font-->
-			<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 			<!-- Compiled and minified CSS -->
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
 			<!--Let browser know website is optimized for mobile-->
@@ -34,8 +34,8 @@
 		<body>
 	<ul id="" class="side-nav fixed grey darken-4">
     <li><div class="userView">
-      <img class="background" src="images/office.jpg">
-      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+      <img class="background" src="https://images.alphacoders.com/188/thumb-1920-188571.jpg">
+      <a href="#!user"><img class="circle" src="http://curry.virginia.edu/uploads/employeePhotos/JoeGarofalo220x220.jpg"></a>
       <a href="#!name"><span class="yellow-text name">John Doe</span></a>
       <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
     </div></li>
@@ -43,14 +43,29 @@
     <li><a href="#!" class="white-text">Second Link</a></li>
     <li><div class="divider"></div></li>
     <li><a class="subheader yellow-text lighten-4">Past Workouts</a></li>
-    <li><a class="waves-effect white-text" href="#!">Yesterday</a></li>
-	<li><a class="waves-effect white-text" href="#!">Tuesday</a></li>
-	<li><a class="waves-effect grey-text lighten-4" href="#!">More...</a></li>
+    <li><a class="waves-effect white-text" href="?wid=213400">Yesterday</a></li>
+	<li><a class="waves-effect white-text" href="?wid=867128">Tuesday</a></li>
+	<li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li>
+		  <a class="collapsible-header waves-effect grey-text lighten-4" href="#!">More<i class="material-icons right">arrow_drop_down</i></a>
+
+            <div class="collapsible-body">
+              <ul>
+                <li><a href="#!">First</a></li>
+                <li><a href="#!">Second</a></li>
+                <li><a href="#!">Third</a></li>
+                <li><a href="#!">Fourth</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
   </ul>
   
   <ul id="slide-out" class="hide-on-large-only side-nav fixed grey darken-4">
     <li><div class="userView">
-      <img class="background" src="images/office.jpg">
+      <img class="background" src="https://images.alphacoders.com/188/thumb-1920-188571.jpg">
       <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
       <a href="#!name"><span class="yellow-text name">John Doe</span></a>
       <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
@@ -65,19 +80,32 @@
   </ul>
  
   <header class="page-header">
-  <nav class="grey darken-3">
-    <div class="nav-wrapper container">
-      <a href="#" class="brand-logo center">Logo</a>
-      <ul id="nav-mobile" class="right">
-        <li><a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a></li>
-      </ul>
-    </div>
-  </nav>
+	  <nav class="grey darken-3">
+		<div class="nav-wrapper row container">
+			<a href="#" class="brand-logo">Logo</a>
+			<ul id="nav-mobile" class="right">
+				<li><a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a></li>
+			</ul>
+		</div>
+	  </nav>
+	<div class="grey darken-2">
+		<div class="container">
+			<div class="row s12">
+				<div class="col s8 offset-s4">
+				<ul class="tabs">
+					<li class="tab"><a href="#summary" class="active grey darken-2">Summary</a></li>
+					<li class="tab"><a href="#replay" class="grey darken-2">Replay</a></li>
+					<li class="tab"><a href="#analytics" class="grey darken-2">Analytics</a></li>
+				</ul>
+				</div>
+			</div>
+		</div>
+	</div>
   </header>
 			<main>
-			 <div class="parallax-container valign-wrapper">
-				<div class="parallax hide-on-small-only "><img src="https://images.alphacoders.com/692/692037.jpg"></div>
-				<div class="valign container section">
+			 <div class="section">
+				
+				<div id="summary" class="valign container section">
 					<h4>Workout Summary</h4>
 					<table class="highlight">
         <thead>
@@ -109,7 +137,7 @@
 					<a class="btn waves-effect center-align white grey-text darken-text-2">button</a>
 				</div>
 			</div>
-				<div class="section">
+				<div id="replay" class="section">
 				<div class="row container">
 				
 					<h4>Workout Details</h4>
@@ -163,8 +191,8 @@
 						</li>
 				</div>
 				</div>
-				<div class="parallax-container hide-on-small-only valign-wrapper section">
-				<div class="parallax"><img src="http://az616578.vo.msecnd.net/files/2016/08/09/636063495775359621-1507709868_gym-1040985_960_720.jpg"></div>
+				<div id="analytics" class="section">
+				
 					<div class="valign container section">
 						<h4>Workout Analytics</h4>
 					</div>
@@ -205,6 +233,7 @@
 					$('.carousel.carousel-slider').carousel({full_width: true});
 					$(".button-collapse").sideNav();
 					$('.parallax').parallax();
+					$('ul.tabs').tabs();
 				});
 			</script>
 		</body>
