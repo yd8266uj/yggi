@@ -20,7 +20,7 @@
 	
 	  body {
     display: flex;
-    min-height: 100vh;
+    min-height: 200vh;
     flex-direction: column;
   }
 
@@ -28,18 +28,45 @@
     flex: 1 0 auto;
   }
 			
-			.pin-top {
+.pin-top {
+	background-color: transparent;
     position: relative;
   }
 
-  // Class for when element is below threshold
+
   .pin-bottom {
     position: relative;
   }
 
-  // Class for when element is pinned
   .pinned {
     position: fixed !important;
+	width: 100%;
+  }
+  
+  .nav-tabs a:hover {
+    font-weight: 500;
+    padding-left: 18px;
+    border-bottom: 2px solid #e5454b;
+  }
+  
+  .nav-tabs a:active {
+    font-weight: 500;
+    padding-left: 18px;
+    border-bottom: 2px solid #ea4a4f;
+  }
+  
+  .nav-tabs li {
+	display: inline;
+  }
+  .nav-tabs a {
+	display: inline-block;
+    font-weight: 300;
+    color: #757575;
+    padding-left: 20px;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    letter-spacing: .4;
+    display: inline;
   }
 			</style>
 		</head>
@@ -101,56 +128,25 @@
 			</ul>
 		</div>
 	  </nav>
-	<div class="grey darken-2 tabs-wrapper">
+	<div class="grey darken-2">
 		<div class="container">
-			<div class="row s12">
+			<div class="row">
 				<div class="col s8 offset-s4">
-				<ul class="tabs">
-					<li class="tab"><a href="#summary" class="active grey darken-2">Summary</a></li>
-					<li class="tab"><a href="#replay" class="grey darken-2">Replay</a></li>
-					<li class="tab"><a href="#analytics" class="grey darken-2">Analytics</a></li>
-				</ul>
+					<ul class="section nav-tabs">
+						<li><a href="#summary">Summary</a></li>
+						<li><a href="#replay">Replay</a></li>
+						<li><a href="#analytics">Analytics</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
   </header>
-			<main>
-			 <div class="section">
-				
-				<div id="summary" class="valign container section">
-					<h4>Workout Summary</h4>
-					<table class="highlight">
-        <thead>
-          <tr>
-              <th data-field="id">Name</th>
-              <th data-field="name">Item Name</th>
-              <th data-field="price">Item Price</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
-					<a class="btn waves-effect center-align white grey-text darken-text-2"><i class="material-icons">play_arrow</i></a>
-				</div>
-			</div>
-				<div id="replay" class="section">
+	<main>
+		<div id="summary" class="section scrollspy">
+			<h2>Workout Summary</h2>	
+		</div>
+		<div id="replay" class="section scrollspy">
 				<div class="row container">
 				
 					<h4>Workout Details</h4>
@@ -204,8 +200,7 @@
 						</li>
 				</div>
 				</div>
-				<div id="analytics" class="section">
-				
+				<div id="analytics" class="section scrollspy">				
 					<div class="valign container section">
 						<h4>Workout Analytics</h4>
 					</div>
@@ -246,7 +241,8 @@
 					$('.carousel.carousel-slider').carousel({full_width: true});
 					$(".button-collapse").sideNav();
 					$('.parallax').parallax();
-					$('ul.tabs').tabs();
+					$('.scrollspy').scrollSpy();
+					$('.page-header').pushpin({ top: 1});
 					//$('.tabs-wrapper').pushpin({ top: $('.tabs-wrapper').offset().top, left: $('.tabs-wrapper').offset().left, width: $('body').width() - $('.tabs-wrapper').offset().left });
 				});
 			</script>

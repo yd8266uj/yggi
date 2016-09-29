@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--Import Google Icon Font-->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!-- Compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+		<!--Let browser know website is optimized for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<style>
+			.section {
+				min-height: calc( 100vh - 64px );
+			}
+
+			
+			.pin-top {
+				position: absolute;
+				background-color: transparent;
+				color: black;
+				box-shadow: none;
+			}
+		
+			nav {
+				transition: color .2s, background-color .2s;
+				z-index: 2;
+			}
+			
+			ul#staggered-facts li {
+				opacity: 0;
+			}
+			
+			ul#staggered-quotes li {
+				opacity: 0;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<header id="header" class="scrollspy" style="min-height:100vh;position:relative">
+
+			<div class="slider">
+				<ul class="slides">
+				  <li>
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Red_flag.svg/2000px-Red_flag.svg.png">
+					<div class="caption left-align">
+					  <h3>Left Aligned Caption</h3>
+					  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+					</div>
+				  </li>
+				  <li>
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Solid_blue.svg/225px-Solid_blue.svg.png">
+					<div class="caption right-align">
+					  <h3>Right Aligned Caption</h3>
+					  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+					</div>
+				  </li>
+				  <li>
+					<div class="caption center-align">
+					  <h3>This is our big Tagline!</h3>
+					  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+					</div>
+				  </li>
+				</ul>
+			</div>
+			<div class="caption center-align" style="position:absolute;bottom: 20vh;z-index:2;width:100%">
+					  <h3 class="light grey-text text-lighten-3">Fixed Position Caption</h3>
+					  <h5 class="light grey-text text-lighten-3">Pretend the solid colors are actually pictures/video</h5>
+			</div>
+			<nav id="nav-top" class="white-text">
+				<div class="nav-wrapper container"> 
+					<a href="#header" class="brand-logo">#service_name</a>
+					<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+					<ul class="right right hide-on-med-and-down">
+						<li><a href="#content1">#content1</a></li>
+						<li><a href="#content2">#content2</a></li>
+					</ul>
+				</div>
+			</nav>	
+			<ul class="side-nav" id="mobile-demo" style="z-index:998">
+				<li><a href="#header">#service_name</a></li>
+				<li><a href="#content1">#content1</a></li>
+				<li><a href="#content2">#content2</a></li>
+			</ul>
+		</header>
+		<main>
+			<div id="content1" class="section scrollspy container">
+				<h3 class="truncate">#content1</h3>
+					  <div class="row">
+						<ul id="staggered-facts">
+						<li class="col s12 m3">
+						  <div class="card hoverable purple darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="number of high school students who took the ACT">
+							<div class="activator card-content white-text center">
+							  <span class="card-title"><i class="material-icons large">group</i></span>
+							  <h4>1,840,000</h4>
+							</div>
+						  </div>
+						</li>
+						<li class="col s12 m3">
+						  <div class="card hoverable yellow darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="how long ACT takes to complete">
+							<div class="card-content white-text center">
+							  <span class="card-title"><i class="material-icons large">timer</i></span>
+							  <h4>3:35:00</h4>
+							</div>
+						  </div>
+						</li>
+						<li class="col s12 m3">
+						  <div class="card hoverable green darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="mean ACT composite score">
+							<div class="card-content white-text center">
+							  <span class="card-title"><i class="material-icons large">timeline</i></span>
+							  <h4>21.0</h4>
+							</div>
+						  </div>
+						</li>
+						<li class="col s12 m3">
+						  <div class="card hoverable orange darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="dollars needed to improve your scores">
+							<div class="card-content white-text center">
+							  <span class="card-title"><i class="material-icons large">school</i></span>
+							  <h4>5</h4>
+							</div>
+						  </div>
+						</li>
+						</ul>
+					  </div>
+					  <ul id="staggered-quotes">
+							<li><blockquote class="flow-text"> I used #service_name and now I am a millionaire.	</blockquote></li>
+							<li><blockquote class="flow-text">Praesent ornare, dolor quis eleifend fermentum, neque orci placerat diam, a finibus leo elit in metus. Aenean odio ante, tempus nec mollis eget, gravida eget nisi. Nunc ornare fringilla magna eu malesuada. Nullam accumsan elit et massa sodales, nec mollis metus euismod. Donec rutrum convallis dolor vitae posuere. Quisque lacinia risus et sollicitudin sagittis.</blockquote></li>
+							<li><blockquote class="flow-text"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis justo risus. Donec non sapien id elit semper lobortis in id eros. Suspendisse elementum in diam ac porta. Vestibulum quis sem vel velit vehicula malesuada. Cras sit amet vulputate augue, non gravida tellus.	</blockquote></li>
+					</ul>
+				</div>
+			<div id="content2" class="section scrollspy container">
+				<h3 class="truncate">#content2</h3>
+<table class="highlight">
+        <thead>
+          <tr>
+			  <th data-field="_blank"></th>
+              <th data-field="#service_name">#service_name</th>
+              <th data-field="other-website">Other Website</th>
+			  <th data-field="private-tutor">Private Tutor</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>one-on-one support</td>
+            <td><i class="material-icons small green-text">done</i></td>
+            <td><i class="material-icons small red-text">clear</i></td>
+            <td><i class="material-icons small green-text">done</i></td>
+          </tr>
+          <tr>
+            <td>time</td>
+            <td>15</td>
+            <td>60+</td>
+			<td>60+</td>
+          </tr>
+          <tr>
+            <td>cost</td>
+            <td>$5</td>
+            <td>$299</td>
+			<td>$500</td>
+          </tr>
+        </tbody>
+      </table>
+			</div>
+		</main>
+		<footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+          </div>
+        </footer>
+            
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<!-- Compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+		<script>
+			$( document ).ready(function() {
+				$('#nav-top').pushpin({ top: window.innerHeight / 2 });
+				$('.scrollspy').scrollSpy({ scrollOffset: parseInt($('#nav-top').css('height'),10) });
+				$(".button-collapse").sideNav({ closeOnClick: true});
+				$('.slider').slider({
+					height: window.innerHeight,
+					indicators: false
+				});
+				$('.slider').slider('prev');
+				$('.slider').slider('next');
+				var options = [{
+					selector: '#content1', offset: 400, callback: function(e) {
+						Materialize.showStaggeredList('#staggered-facts');
+						Materialize.showStaggeredList('#staggered-quotes');
+					}
+				}];
+			   Materialize.scrollFire(options);
+			});
+		</script>
+	</body>
+</html>
