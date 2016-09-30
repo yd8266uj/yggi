@@ -1,0 +1,46 @@
+<head>
+<style>
+	.question::before {
+		content: attr(data-question-number);
+	}	
+	
+	.answers li::before {
+		content: attr(data-answer-letter);
+	}
+	
+	.passage-sentence::before {
+		content: "["attr(data-sentence-number)"]";
+	}	
+	
+	.passage-phrase {
+		position: relative;
+	}
+	
+	.passage-phrase::after {
+		content: attr(data-phrase-number);
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, 50%);
+	}		
+</style>
+</head>
+
+
+<div class="passage">
+	<div class="passage-header">
+		<h4>Edna Gellhorn’s “Walkless-Talkless Parade”</h4>
+	</div>
+	<div class="passage-content">
+		<p class="flow-text">In 1916, <a href="" class="passage-phrase" data-phrase-number="1">as</a> the Democratic Party’s national convention met in St. Louis, Missouri, to nominate candidates for the presidency and vice-presidency and to establish a platform, a set of positions on issues. <a href="" class="passage-sentence" data-sentence-number="1"> Edna Gellhorn, a leader in the Missouri Equal Suffrage League, planned a “silent parade” without movement or music or speech.</a> She gathered together 7,000 St. Louis women. </p>
+	</div>
+</div>
+<div class="question" data-question-number="1">
+	<div class="prompt">Choose the best answer.</div>
+	<ul class="answers">
+		<li data-answer-letter="A"><input type="radio" name="1" value="A" id="1_A"><label for="1_A">NO CHANGE</label></li>
+		<li data-answer-letter="B"><input type="radio" name="1" value="B" id="1_B"><label for="1_B">while</label></li>
+		<li data-answer-letter="C"><input type="radio" name="1" value="C" id="1_C"><label for="1_C">when</label></li>
+		<li data-answer-letter="D"><input type="radio" name="1" value="D" id="1_D"><label for="1_D">OMIT the underlined portion.</label></li>
+	</ul>
+</div>

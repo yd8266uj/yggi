@@ -14,7 +14,6 @@
 
 			
 			.pin-top {
-				position: absolute;
 				background-color: transparent;
 				color: black;
 				box-shadow: none;
@@ -22,6 +21,8 @@
 		
 			nav {
 				transition: color .2s, background-color .2s;
+				position:absolute;
+				top:0;
 				z-index: 2;
 			}
 			
@@ -33,12 +34,59 @@
 				opacity: 0;
 			}
 			
+			.question::before {
+				content: attr(data-question-number)")";
+				position: absolute;
+				font-size: 120%;
+				transform: translate(-300%, 50%);
+			}	
+			
+			.answers li::before {
+				content: attr(data-answer-letter);
+			}
+			
+			.passage a {
+				color: inherit;
+			}
+			
+			.passage a:hover {
+				color: #039be5;
+			}
+			
+			#sample a.active {
+				color: #8e24aa
+			}
+			
+			.passage-sentence::before {
+				content: "["attr(data-sentence-number)"]";
+			}	
+			
+			.passage-phrase {
+				position: relative;
+				text-decoration: underline;
+			}
+			
+			.passage-phrase::after {
+				content: attr(data-phrase-number);
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, 70%);
+				font-size: 50%;
+			}
+			
+			.question {
+				padding-left: 100px;
+			}
+
+
+
+
 		</style>
 	</head>
 	<body>
-		<header id="header" class="scrollspy" style="min-height:100vh;position:relative">
-
-			<div class="slider">
+		<header id="header" class="scrollspy" style="min-height:100vh">
+			<div class="slider" style="position:absolute;">
 				<ul class="slides">
 				  <li>
 					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Red_flag.svg/2000px-Red_flag.svg.png">
@@ -73,6 +121,7 @@
 					<ul class="right right hide-on-med-and-down">
 						<li><a href="#content1">#content1</a></li>
 						<li><a href="#content2">#content2</a></li>
+						<li><a href="#sample">#sample</a></li>
 					</ul>
 				</div>
 			</nav>	
@@ -80,6 +129,7 @@
 				<li><a href="#header">#service_name</a></li>
 				<li><a href="#content1">#content1</a></li>
 				<li><a href="#content2">#content2</a></li>
+				<li><a href="#sample">#sample</a></li>
 			</ul>
 		</header>
 		<main>
@@ -87,7 +137,7 @@
 				<h3 class="truncate">#content1</h3>
 					  <div class="row">
 						<ul id="staggered-facts">
-						<li class="col s12 m3">
+						<li class="col s12 m6 l3">
 						  <div class="card hoverable purple darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="number of high school students who took the ACT">
 							<div class="activator card-content white-text center">
 							  <span class="card-title"><i class="material-icons large">group</i></span>
@@ -95,7 +145,7 @@
 							</div>
 						  </div>
 						</li>
-						<li class="col s12 m3">
+						<li class="col s12 m6 l3">
 						  <div class="card hoverable yellow darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="how long ACT takes to complete">
 							<div class="card-content white-text center">
 							  <span class="card-title"><i class="material-icons large">timer</i></span>
@@ -103,7 +153,7 @@
 							</div>
 						  </div>
 						</li>
-						<li class="col s12 m3">
+						<li class="col s12 m6 l3">
 						  <div class="card hoverable green darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="mean ACT composite score">
 							<div class="card-content white-text center">
 							  <span class="card-title"><i class="material-icons large">timeline</i></span>
@@ -111,7 +161,7 @@
 							</div>
 						  </div>
 						</li>
-						<li class="col s12 m3">
+						<li class="col s12 m6 l3">
 						  <div class="card hoverable orange darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="dollars needed to improve your scores">
 							<div class="card-content white-text center">
 							  <span class="card-title"><i class="material-icons large">school</i></span>
@@ -122,9 +172,9 @@
 						</ul>
 					  </div>
 					  <ul id="staggered-quotes">
-							<li><blockquote class="flow-text"> I used #service_name and now I am a millionaire.	</blockquote></li>
-							<li><blockquote class="flow-text">Praesent ornare, dolor quis eleifend fermentum, neque orci placerat diam, a finibus leo elit in metus. Aenean odio ante, tempus nec mollis eget, gravida eget nisi. Nunc ornare fringilla magna eu malesuada. Nullam accumsan elit et massa sodales, nec mollis metus euismod. Donec rutrum convallis dolor vitae posuere. Quisque lacinia risus et sollicitudin sagittis.</blockquote></li>
-							<li><blockquote class="flow-text"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis justo risus. Donec non sapien id elit semper lobortis in id eros. Suspendisse elementum in diam ac porta. Vestibulum quis sem vel velit vehicula malesuada. Cras sit amet vulputate augue, non gravida tellus.	</blockquote></li>
+							<li><blockquote class="flow-text"> I used #service_name and now I am a millionaire.</blockquote></li>
+							<li><blockquote class="flow-text">Praesent ornare, dolor quis eleifend fermentum, neque orci placerat diam, a finibus leo elit in metus. Aenean odio ante, tempus nec mollis eget, gravida eget nisi.</blockquote></li>
+							<li><blockquote class="flow-text"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis justo risus.</blockquote></li>
 					</ul>
 				</div>
 			<div id="content2" class="section scrollspy container">
@@ -160,7 +210,198 @@
           </tr>
         </tbody>
       </table>
+	  
+	  </div>
+	  
+	  
+	  
+	  
+	<div id="sample" class="scrollspy container section">
+		<h3 class="truncate">#sample</h3>
+		<div id="quiz" class="row">
+		<div class="passage col m7">
+			<div class="passage-header">
+				<h4>Edna Gellhorn's "Walkless-Talkless Parade"</h4>
 			</div>
+			<div class="passage-content">
+				<p class="flow-text">
+					In 1916, 
+					<a href="#q1" id="q1" class="passage-phrase scrollspy2" data-phrase-number="1">as</a> the Democratic Party's national convention met in St. Louis, Missouri, to nominate candidates 
+					<a href="#q2" id="q2" class="passage-phrase scrollspy2" data-phrase-number="2">for the presidency</a> and vice-presidency and to establish a platform, a set of positions on issues. 
+					<a href="#q3" id="q3" class="passage-phrase scrollspy2" data-phrase-number="3">Therefore, suffragists</a> (those who advocated extending voting rights to women) wanted the Democrats' platform to support women's right to vote.
+				</p>
+				<p class="flow-text">
+					[1] Edna Gellhorn, a leader in the Missouri Equal Suffrage League, planned a "silent parade" without 
+					<a href="#q4" id="q4" class="passage-phrase scrollspy2" data-phrase-number="4">movement or music or</a> speech. [2] She gathered together 7,000 St. Louis women. [3] Similar forms of demonstrations, known as "walkless-talkless parades," 
+					<a href="#q5" id="q5" class="passage-phrase scrollspy2" data-phrase-number="5">had been</a> adopted by national woman suffrage organizations in Washington, D.C. [4] Gellhorn made telephone calls and wrote letters. [5] They donned yellow sashes over white dresses and held yellow umbrellas aloft as they lined both sides of Locust Street 
+					<a href="#q6" id="q6" class="passage-phrase scrollspy2" data-phrase-number="6">between</a> the convention delegates' hotel and the meeting hall. 
+					<a href="#q7" id="q7" class="passage-phrase scrollspy2" data-phrase-number="7">7</a>
+				</p>
+				<p class="flow-text">    
+					<a href="#q8" id="q8" class="passage-phrase scrollspy2" data-phrase-number="8">At the end of the "Golden Lane," as the event was also called,</a> Gellhorn organized a three-tiered "living tableau," 
+					<a href="#q9" id="q9" class="passage-phrase scrollspy2" data-phrase-number="9">which a live scene was</a> presented by silent, costumed participants. Women wearing white represented states 
+					<a href="#q10" id="q10" class="passage-phrase scrollspy2" data-phrase-number="10">where</a> women could vote. Others wore gray to represent states with partial suffrage (women could vote in school board elections, for example). Women draped in black represented states that refused women the vote. This group held out manacled hands to 
+					<a href="#q11" id="q11" class="passage-phrase scrollspy2" data-phrase-number="11">them as a reminder</a> that, without the vote, women were deprived of their freedom. At the top of the 
+					<a href="#q12" id="q12" class="passage-phrase scrollspy2" data-phrase-number="12">tiers, stood a woman</a> dressed as Lady Liberty.
+				</p>
+				<p class="flow-text">
+					Edna Gellhorn witnessed a victory that year when votes for women 
+					<a href="#q13" id="q13" class="passage-phrase scrollspy2" data-phrase-number="13">would became</a> part of the 1916 Democratic Party's 
+					<a href="#q14" id="q14" class="passage-phrase scrollspy2" data-phrase-number="14">set of positions, or</a> platform. Then finally in August 1920, after more than seventy years and countless parades, speeches, letters, and calls, the Nineteenth 
+					<a href="#q15" id="q15" class="passage-phrase scrollspy2" data-phrase-number="15">Amendment, to the U.S. Constitution,</a> was ratified, thus giving all women the right to vote.
+				</p>
+			</div>
+		</div>
+		<div class="col offset-m1 m4">
+						<div class="question-wrapper" style="height: calc( 100vh - 64px );overflow-y:hidden">
+							<ul style="position:relative;top:0;height:100%;">
+							<li class="question" data-question-number="1">
+								<a href="#q1"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="1" value="A" id="1_A"><label for="1_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="1" value="B" id="1_B"><label for="1_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="1" value="C" id="1_C"><label for="1_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="1" value="D" id="1_D"><label for="1_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="2">
+								<a href="#q2"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="2" value="A" id="2_A"><label for="2_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="2" value="B" id="2_B"><label for="2_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="2" value="C" id="2_C"><label for="2_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="2" value="D" id="2_D"><label for="2_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="3">
+								<a href="#q3"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="3" value="A" id="3_A"><label for="3_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="3" value="B" id="3_B"><label for="3_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="3" value="C" id="3_C"><label for="3_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="3" value="D" id="3_D"><label for="3_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="4">
+								<a href="#q4"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="4" value="A" id="4_A"><label for="4_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="4" value="B" id="4_B"><label for="4_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="4" value="C" id="4_C"><label for="4_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="4" value="D" id="4_D"><label for="4_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="5">
+								<a href="#q5"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="5" value="A" id="5_A"><label for="5_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="5" value="B" id="5_B"><label for="5_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="5" value="C" id="5_C"><label for="5_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="5" value="D" id="5_D"><label for="5_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							
+							<li class="question" data-question-number="6">
+								<a href="#q6"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="1" value="A" id="1_A"><label for="1_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="1" value="B" id="1_B"><label for="1_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="1" value="C" id="1_C"><label for="1_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="1" value="D" id="1_D"><label for="1_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="7">
+								<a href="#q7"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="2" value="A" id="2_A"><label for="2_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="2" value="B" id="2_B"><label for="2_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="2" value="C" id="2_C"><label for="2_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="2" value="D" id="2_D"><label for="2_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="8">
+								<a href="#q8"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="3" value="A" id="3_A"><label for="3_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="3" value="B" id="3_B"><label for="3_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="3" value="C" id="3_C"><label for="3_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="3" value="D" id="3_D"><label for="3_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="9">
+								<a href="#q9"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="4" value="A" id="4_A"><label for="4_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="4" value="B" id="4_B"><label for="4_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="4" value="C" id="4_C"><label for="4_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="4" value="D" id="4_D"><label for="4_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="10">
+								<a href="#q10"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="5" value="A" id="5_A"><label for="5_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="5" value="B" id="5_B"><label for="5_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="5" value="C" id="5_C"><label for="5_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="5" value="D" id="5_D"><label for="5_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							
+							<li class="question" data-question-number="11">
+								<a href="#q11"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="1" value="A" id="1_A"><label for="1_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="1" value="B" id="1_B"><label for="1_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="1" value="C" id="1_C"><label for="1_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="1" value="D" id="1_D"><label for="1_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="12">
+								<a href="#q12"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="2" value="A" id="2_A"><label for="2_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="2" value="B" id="2_B"><label for="2_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="2" value="C" id="2_C"><label for="2_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="2" value="D" id="2_D"><label for="2_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="13">
+								<a href="#q13"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="3" value="A" id="3_A"><label for="3_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="3" value="B" id="3_B"><label for="3_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="3" value="C" id="3_C"><label for="3_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="3" value="D" id="3_D"><label for="3_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="14">
+								<a href="#q14"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="4" value="A" id="4_A"><label for="4_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="4" value="B" id="4_B"><label for="4_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="4" value="C" id="4_C"><label for="4_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="4" value="D" id="4_D"><label for="4_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="15">
+								<a href="#q15"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="5" value="A" id="5_A"><label for="5_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="5" value="B" id="5_B"><label for="5_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="5" value="C" id="5_C"><label for="5_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="5" value="D" id="5_D"><label for="5_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>							
+				</ul>
+
+			</div>
+		</div>
+	  
+	 
+	  
+	  
+	</div>
+	<div class="section"> </div>
 		</main>
 		<footer class="page-footer">
           <div class="container">
@@ -194,7 +435,17 @@
 		<script>
 			$( document ).ready(function() {
 				$('#nav-top').pushpin({ top: window.innerHeight / 2 });
-				$('.scrollspy').scrollSpy({ scrollOffset: parseInt($('#nav-top').css('height'),10) });
+				$('.question-wrapper').pushpin({ top: $('#quiz').offset().top, bottom: $('#quiz').offset().top + $('#quiz').height() - $('.question-wrapper').height() - $('#nav-top').height() + 1000,offset: $('#nav-top').height() });
+
+				$('.scrollspy').scrollSpy({ scrollOffset:$('#nav-top').height() });
+				$('.scrollspy2').scrollSpy({ scrollOffset: 400, throttle:10 }).on('scrollSpy:enter', function() { 			
+					if( $('.question-wrapper .active').position()) {
+						offset = $('.question-wrapper .active').position().top;
+						$('.question-wrapper > ul').animate({ top: -offset + 200 }, {duration: 800, queue: false, easing: 'easeOutCubic'});
+					}
+				});
+				
+				console.log($('.scrollspy2').scrollSpy());
 				$(".button-collapse").sideNav({ closeOnClick: true});
 				$('.slider').slider({
 					height: window.innerHeight,
