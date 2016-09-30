@@ -443,6 +443,11 @@
 						offset = $('.question-wrapper .active').position().top;
 						$('.question-wrapper > ul').animate({ top: -offset + 200 }, {duration: 800, queue: false, easing: 'easeOutCubic'});
 					}
+				}).on('scrollSpy:exit', function() { 			
+					if( $('.question-wrapper .active').position()) {
+						offset = $('.question-wrapper .active').position().top;
+						$('.question-wrapper > ul').animate({ top: -offset + 200 }, {duration: 800, queue: false, easing: 'easeOutCubic'});
+					}
 				});
 				
 				console.log($('.scrollspy2').scrollSpy());
