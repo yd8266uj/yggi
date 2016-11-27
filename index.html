@@ -1,145 +1,614 @@
 <!DOCTYPE html>
 <html>
-<body>
-<div id="version">-a9</div>
-<div id="log"></div>
-<video></video>
-<script>
-		var constraints = {"audio": false, "video": { "mandatory": { "minWidth": 320, "maxWidth": 320, "minHeight": 240,"maxHeight": 240 }, "optional": [] } };
-//		var constraints = {audio: true,video: { width: { min: 320, ideal: 320, max: 1280 }, height: { min: 240, ideal: 240, max: 720 }}}; 
- 
-	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-	var videoElement = document.querySelector('video');
-	videoElement.controls = false;
-	if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia) {
-      alert('Sorry! This demo requires Firefox 30 and up or Chrome 47 and up.');
-    }
-
-
-	function speak(text, callback) {
-		var u = new SpeechSynthesisUtterance();
-		u.text = text;
-		u.lang = 'en-US';
-		u.voice = 'Google US English';
-	 
-		u.onend = function () {
-			if (callback) {
-				callback();
+	<head>
+		<!--Import Google Icon Font-->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!-- Compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+		<!--Let browser know website is optimized for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<style>
+			.section {
+				min-height: calc( 100vh - 64px );
 			}
-		};
-	 
-		u.onerror = function (e) {
-			if (callback) {
-				callback(e);
+
+			
+			.pin-top {
+				background-color: transparent;
+				color: black;
+				box-shadow: none;
 			}
-		};
-	 
-		speechSynthesis.speak(u);
-	}
-	function errorCallback() {}
-	function startRecording(stream) {
-		log('Starting camera...');
-		mediaRecorder = new MediaRecorder(stream);
-
-		mediaRecorder.start();
-
-		var url = window.URL || window.webkitURL;
-		videoElement.src = url ? url.createObjectURL(stream) : stream;
-		videoElement.play();
-
-		mediaRecorder.ondataavailable = function(e) {
-			//log('Data available...');
-			chunks.push(e.data);
-		};
-
-		mediaRecorder.onerror = function(e){
-			log('Error: ' + e);
-			console.log('Error: ', e);
-		};
-
-
-		mediaRecorder.onstart = function(){
-			log('Started, state = ' + mediaRecorder.state);
-		};
-
-		mediaRecorder.onstop = function(){
-			log('Stopped, state = ' + mediaRecorder.state);
-
-			var blob = new Blob(chunks, {type: "video/webm"});
-			chunks = [];
-
-			var videoURL = window.URL.createObjectURL(blob);
-
-			downloadLink.href = videoURL;
-			videoElement.src = videoURL;
-			downloadLink.innerHTML = 'Download video file';
-
-			var rand = Math.floor((Math.random() * 10000000));
-			var name = "video_"+rand+".webm" ;
-
-			downloadLink.setAttribute( "download", name);
-			downloadLink.setAttribute( "name", name);
-
-		};
-
-		mediaRecorder.onwarning = function(e){
-			log('Warning: ' + e);
-		};
-	}
- 
- 
-
-    speak('Let me know when you are ready to begin', function () {
-	
-		var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
-		var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
-		var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
-		var grammar = '#JSGF V1.0; grammar commands; public <command> = begin | end ;';
-
-		var recognition = new SpeechRecognition();
-		var speechRecognitionList = new SpeechGrammarList();
-		speechRecognitionList.addFromString(grammar, 1);
-		recognition.grammars = speechRecognitionList;
-		recognition.continuous = true;
-		recognition.lang = 'en-US';
-		recognition.interimResults = false;
-		recognition.maxAlternatives = 1;
- 
-		recognition.onresult = function (event) {
-			console.log(event);
-			var command = event.results[event.resultIndex][0].transcript.trim();
-			log(command);
-			if( 'begin' == command ) {
-				navigator.getUserMedia(constraints, startRecording, errorCallback);
-			}
-			if( 'end' == command ) {
-				mediaRecorder.stop();
-			}
-		}
 		
-		recognition.onspeechend = function() {
-			//log('stopped');
-			//recognition.stop();
-		}
+			nav {
+				transition: color .2s, background-color .2s;
+				position:absolute;
+				top:0;
+				z-index: 2;
+			}
+			
+			ul#staggered-facts li {
+				opacity: 0;
+			}
+			
+			ul#staggered-quotes li {
+				opacity: 0;
+			}
+			
+			.question::before {
+				content: attr(data-question-number)")";
+				position: absolute;
+				font-size: 120%;
+				transform: translate(-300%, 50%);
+			}	
+			
+			.answers li::before {
+				content: attr(data-answer-letter);
+			}
+			
+			.passage a {
+				color: inherit;
+			}
+			
+			.passage a:hover {
+				color: #039be5;
+			}
+			
+			#sample a.active {
+				color: #8e24aa
+			}
+			
+			.passage-sentence::before {
+				content: "["attr(data-sentence-number)"]";
+			}	
+			
+			.passage-phrase {
+				position: relative;
+				text-decoration: underline;
+			}
+			
+			.passage-phrase::after {
+				content: attr(data-phrase-number);
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, 70%);
+				font-size: 50%;
+			}
+			
+			.question {
+				padding-left: 100px;
+			}
 
-		recognition.onnomatch = function(event) {
-			log('no match');
-		}
 
-		recognition.onerror = function(event) {
-			log('error: ' + event.error);
-		}
+
+
+		</style>
+	</head>
+	<body>
+		<header id="header" class="scrollspy" style="min-height:100vh">
+			<div class="slider" style="position:absolute;">
+				<ul class="slides">
+				  <li>
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Red_flag.svg/2000px-Red_flag.svg.png">
+					<div class="caption left-align">
+					  <h3>Left Aligned Caption</h3>
+					  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+					</div>
+				  </li>
+				  <li>
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Solid_blue.svg/225px-Solid_blue.svg.png">
+					<div class="caption right-align">
+					  <h3>Right Aligned Caption</h3>
+					  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+					</div>
+				  </li>
+				  <li>
+					<div class="caption center-align">
+					  <h3>This is our big Tagline!</h3>
+					  <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+					</div>
+				  </li>
+				</ul>
+			</div>
+			<div class="caption center-align" style="position:absolute;bottom: 20vh;z-index:2;width:100%">
+					  <h3 class="light grey-text text-lighten-3">Fixed Position Caption</h3>
+					  <h5 class="light grey-text text-lighten-3">Pretend the solid colors are actually pictures/video</h5>
+			</div>
+			<nav id="nav-top" class="white-text">
+				<div class="nav-wrapper container"> 
+					<a href="#header" class="brand-logo">#service_name</a>
+					<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+					<ul class="right right hide-on-med-and-down">
+						<li><a href="#content1">#content1</a></li>
+						<li><a href="#content2">#content2</a></li>
+						<li><a href="#sample">#sample</a></li>
+						<li><a href="#pricing">#pricing</a></li>
+					</ul>
+				</div>
+			</nav>	
+			<ul class="side-nav" id="mobile-demo" style="z-index:998">
+				<li><a href="#header">#service_name</a></li>
+				<li><a href="#content1">#content1</a></li>
+				<li><a href="#content2">#content2</a></li>
+				<li><a href="#sample">#sample</a></li>
+				<li><a href="#pricing">#pricing</a></li>
+			</ul>
+		</header>
+		<main>
+			<div id="content1" class="section scrollspy container">
+				<h3 class="truncate">#content1</h3>
+					  <div class="row">
+						<ul id="staggered-facts">
+						<li class="col s12 m6 l3">
+						  <div class="card hoverable purple darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="number of high school students who took the ACT">
+							<div class="activator card-content white-text center">
+							  <span class="card-title"><i class="material-icons large">group</i></span>
+							  <h4>1,840,000</h4>
+							</div>
+						  </div>
+						</li>
+						<li class="col s12 m6 l3">
+						  <div class="card hoverable yellow darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="how long ACT takes to complete">
+							<div class="card-content white-text center">
+							  <span class="card-title"><i class="material-icons large">timer</i></span>
+							  <h4>3:35:00</h4>
+							</div>
+						  </div>
+						</li>
+						<li class="col s12 m6 l3">
+						  <div class="card hoverable green darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="mean ACT composite score">
+							<div class="card-content white-text center">
+							  <span class="card-title"><i class="material-icons large">timeline</i></span>
+							  <h4>21.0</h4>
+							</div>
+						  </div>
+						</li>
+						<li class="col s12 m6 l3">
+						  <div class="card hoverable orange darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="dollars needed to improve your scores">
+							<div class="card-content white-text center">
+							  <span class="card-title"><i class="material-icons large">school</i></span>
+							  <h4>5</h4>
+							</div>
+						  </div>
+						</li>
+						</ul>
+					  </div>
+					  <ul id="staggered-quotes">
+							<li><blockquote class="flow-text"> I used #service_name and now I am a millionaire.</blockquote></li>
+							<li><blockquote class="flow-text">Praesent ornare, dolor quis eleifend fermentum, neque orci placerat diam, a finibus leo elit in metus. Aenean odio ante, tempus nec mollis eget, gravida eget nisi.</blockquote></li>
+							<li><blockquote class="flow-text"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis justo risus.</blockquote></li>
+					</ul>
+				</div>
+			<div id="content2" class="section scrollspy container">
+				<h3 class="truncate">#content2</h3>
+<table class="highlight">
+        <thead>
+          <tr>
+			  <th data-field="_blank"></th>
+              <th data-field="#service_name">#service_name</th>
+              <th data-field="other-website">Other Website</th>
+			  <th data-field="private-tutor">Private Tutor</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>personal support</td>
+            <td><i class="material-icons small green-text">done</i></td>
+            <td></td>
+            <td><i class="material-icons small green-text">done</i></td>
+          </tr>
+          <tr>
+            <td>full length test</td>
+            <td><i class="material-icons small green-text">done</i></td>
+            <td><i class="material-icons small green-text">done</i></td>
+			<td><i class="material-icons small green-text">done</i></td>
+          </tr>
+          <tr>
+            <td>quick tests</td>
+            <td><i class="material-icons small green-text">done</i></td>
+            <td></td>
+			<td></td>
+          </tr>
+		  <tr>
+            <td>low cost</td>
+            <td><i class="material-icons small green-text">done</i></td>
+            <td></td>
+			<td></td>
+          </tr>
+        </tbody>
+      </table>
+	  
+	  </div>
+	  
+	  
+	  
+	  
+	<div id="sample" class="scrollspy container section">
+		<h3 class="truncate">#sample</h3>
+		<div id="quiz" class="row">
+		<div class="passage col m7">
+			<div class="passage-header">
+				<h4>Edna Gellhorn's "Walkless-Talkless Parade"</h4>
+			</div>
+			<div class="passage-content">
+				<p class="flow-text">
+					In 1916, 
+					<a href="#q1" id="q1" class="passage-phrase scrollspy2" data-phrase-number="1">as</a> the Democratic Party's national convention met in St. Louis, Missouri, to nominate candidates 
+					<a href="#q2" id="q2" class="passage-phrase scrollspy2" data-phrase-number="2">for the presidency</a> and vice-presidency and to establish a platform, a set of positions on issues. 
+					<a href="#q3" id="q3" class="passage-phrase scrollspy2" data-phrase-number="3">Therefore, suffragists</a> (those who advocated extending voting rights to women) wanted the Democrats' platform to support women's right to vote.
+				</p>
+				<p class="flow-text">
+					[1] Edna Gellhorn, a leader in the Missouri Equal Suffrage League, planned a "silent parade" without 
+					<a href="#q4" id="q4" class="passage-phrase scrollspy2" data-phrase-number="4">movement or music or</a> speech. [2] She gathered together 7,000 St. Louis women. [3] Similar forms of demonstrations, known as "walkless-talkless parades," 
+					<a href="#q5" id="q5" class="passage-phrase scrollspy2" data-phrase-number="5">had been</a> adopted by national woman suffrage organizations in Washington, D.C. [4] Gellhorn made telephone calls and wrote letters. [5] They donned yellow sashes over white dresses and held yellow umbrellas aloft as they lined both sides of Locust Street 
+					<a href="#q6" id="q6" class="passage-phrase scrollspy2" data-phrase-number="6">between</a> the convention delegates' hotel and the meeting hall. 
+					<a href="#q7" id="q7" class="passage-phrase scrollspy2" data-phrase-number="7">7</a>
+				</p>
+				<p class="flow-text">    
+					<a href="#q8" id="q8" class="passage-phrase scrollspy2" data-phrase-number="8">At the end of the "Golden Lane," as the event was also called,</a> Gellhorn organized a three-tiered "living tableau," 
+					<a href="#q9" id="q9" class="passage-phrase scrollspy2" data-phrase-number="9">which a live scene was</a> presented by silent, costumed participants. Women wearing white represented states 
+					<a href="#q10" id="q10" class="passage-phrase scrollspy2" data-phrase-number="10">where</a> women could vote. Others wore gray to represent states with partial suffrage (women could vote in school board elections, for example). Women draped in black represented states that refused women the vote. This group held out manacled hands to 
+					<a href="#q11" id="q11" class="passage-phrase scrollspy2" data-phrase-number="11">them as a reminder</a> that, without the vote, women were deprived of their freedom. At the top of the 
+					<a href="#q12" id="q12" class="passage-phrase scrollspy2" data-phrase-number="12">tiers, stood a woman</a> dressed as Lady Liberty.
+				</p>
+				<p class="flow-text">
+					Edna Gellhorn witnessed a victory that year when votes for women 
+					<a href="#q13" id="q13" class="passage-phrase scrollspy2" data-phrase-number="13">would became</a> part of the 1916 Democratic Party's 
+					<a href="#q14" id="q14" class="passage-phrase scrollspy2" data-phrase-number="14">set of positions, or</a> platform. Then finally in August 1920, after more than seventy years and countless parades, speeches, letters, and calls, the Nineteenth 
+					<a href="#q15" id="q15" class="passage-phrase scrollspy2" data-phrase-number="15">Amendment, to the U.S. Constitution,</a> was ratified, thus giving all women the right to vote.
+				</p>
+			</div>
+		</div>
+			<!--
+		<div class="col offset-m1 m4">
+						<div class="question-wrapper" style="height: calc( 100vh - 64px );overflow-y:hidden">
+							<ul style="position:relative;top:0;height:100%;">
+							<li class="question" data-question-number="1">
+								<a href="#q1"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="1" value="A" id="1_A"><label for="1_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="1" value="B" id="1_B"><label for="1_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="1" value="C" id="1_C"><label for="1_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="1" value="D" id="1_D"><label for="1_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="2">
+								<a href="#q2"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="2" value="A" id="2_A"><label for="2_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="2" value="B" id="2_B"><label for="2_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="2" value="C" id="2_C"><label for="2_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="2" value="D" id="2_D"><label for="2_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="3">
+								<a href="#q3"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="3" value="A" id="3_A"><label for="3_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="3" value="B" id="3_B"><label for="3_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="3" value="C" id="3_C"><label for="3_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="3" value="D" id="3_D"><label for="3_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="4">
+								<a href="#q4"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="4" value="A" id="4_A"><label for="4_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="4" value="B" id="4_B"><label for="4_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="4" value="C" id="4_C"><label for="4_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="4" value="D" id="4_D"><label for="4_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="5">
+								<a href="#q5"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="5" value="A" id="5_A"><label for="5_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="5" value="B" id="5_B"><label for="5_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="5" value="C" id="5_C"><label for="5_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="5" value="D" id="5_D"><label for="5_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							
+							<li class="question" data-question-number="6">
+								<a href="#q6"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="6" value="A" id="6_A"><label for="6_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="6" value="B" id="6_B"><label for="6_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="6" value="C" id="6_C"><label for="6_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="6" value="D" id="6_D"><label for="6_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="7">
+								<a href="#q7"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="7" value="A" id="7_A"><label for="7_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="7" value="B" id="7_B"><label for="7_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="7" value="C" id="7_C"><label for="7_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="7" value="D" id="7_D"><label for="7_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="8">
+								<a href="#q8"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="8" value="A" id="8_A"><label for="8_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="8" value="B" id="8_B"><label for="8_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="8" value="C" id="8_C"><label for="8_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="8" value="D" id="8_D"><label for="8_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="9">
+								<a href="#q9"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="9" value="A" id="9_A"><label for="9_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="9" value="B" id="9_B"><label for="9_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="9" value="C" id="9_C"><label for="9_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="9" value="D" id="9_D"><label for="9_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="10">
+								<a href="#q10"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="10" value="A" id="10_A"><label for="10_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="10" value="B" id="10_B"><label for="10_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="10" value="C" id="10_C"><label for="10_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="10" value="D" id="10_D"><label for="10_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							
+							<li class="question" data-question-number="11">
+								<a href="#q11"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="11" value="A" id="11_A"><label for="11_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="11" value="B" id="11_B"><label for="11_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="11" value="C" id="11_C"><label for="11_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="11" value="D" id="11_D"><label for="11_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="12">
+								<a href="#q12"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="12" value="A" id="12_A"><label for="12_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="12" value="B" id="12_B"><label for="12_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="12" value="C" id="12_C"><label for="12_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="12" value="D" id="12_D"><label for="12_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="13">
+								<a href="#q13"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="13" value="A" id="13_A"><label for="13_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="13" value="B" id="13_B"><label for="13_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="13" value="C" id="13_C"><label for="13_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="13" value="D" id="13_D"><label for="13_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="14">
+								<a href="#q14"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="14" value="A" id="14_A"><label for="14_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="14" value="B" id="14_B"><label for="14_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="14" value="C" id="14_C"><label for="14_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="14" value="D" id="14_D"><label for="14_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>
+							<li class="question" data-question-number="15">
+								<a href="#q15"><h5 class="prompt">Choose the best answer.</h5></a>
+								<ul class="answers">
+									<li data-answer-letter="A"><input type="radio" name="5" value="A" id="15_A"><label for="15_A">NO CHANGE</label></li>
+									<li data-answer-letter="B"><input type="radio" name="15" value="B" id="15_B"><label for="15_B">while</label></li>
+									<li data-answer-letter="C"><input type="radio" name="15" value="C" id="15_C"><label for="15_C">when</label></li>
+									<li data-answer-letter="D"><input type="radio" name="15" value="D" id="15_D"><label for="15_D">OMIT the underlined portion.</label></li>
+								</ul>
+							</li>							
+				</ul>
+
+			</div>
+
+		</div>
+			  -->
 	 
-		// start listening
-		recognition.start();
-		log('listening...');
-    });
+	  
+	  
+	</div>
+	<div style="background-color:white">
+		<div class="card blue-grey hoverable">
+			<div class="card-content white-text center">
+				<h4>Let's break down your performance by question type</h4>
+				<div id="sankey" style="width: 100%; height: 300px;"></div> 
+				<div id="timeline" style="height: 300px;"></div>
+				<div class="row">
+					<div>
+					</div>
+				</div>
+				<div class="card-action">
+					<a class="waves-effect waves-light btn">Analyze</a>
+				</div>		
+			</div>
+		</div>
+	</div>
+	<!--
+	<div id="donutchart" style="width: 900px; height: 500px;"></div>
+	<div id="chart_div"></div> -->
+	</div>
+	<div id="pricing" class="section scrollspy container">
+	<h3 class="truncate">#pricing</h3>
+	<p class="flow-text">Our pricing is simple. You always know what your options are and what you will get. We offer three great plans to fit your needs.</p>
+	<div class="row">
+		<ul id="staggered-prices">
+						<li class="col s12 m6 l4">
+						  <div class="card hoverable sticky-action small cyan darken-1">
+								<div class="card-content white-text center">
+							  <span class="card-title"><h3>$5</h3><h4>Targeted</h4></span>
+							  
+							  <p class="left-align">A shorter test with huge results. Focus on just what is in your way to the results you want.</p>
+							  <div class="card-action">
+								<a class="waves-effect waves-light btn">Browse</a>
+							  </div>
+							  </div>
 
+						  </div>
+						</li>
+						<li class="col s12 m6 l4">
+						  <div class="card hoverable blue medium darken-1">
+							<div class="activator card-content white-text center">
+							  <span class="card-title"><h3>$15</h3><h4>Full</h4></span>
+								<p class="left-align">Just like the real deal. You will take multiple tests designed to prepare you for everything you will encounter on test day. Use our analysis of our result to selected targeted tests for best results.</p>
+							   <div class="card-action">
+								<a class="waves-effect waves-light btn">Purchase</a>
+							  </div>
+							</div>
+						  </div>
+						</li>
+						<li class="col s12 m6 l4">
+						  <div class="card hoverable indigo large darken-1">
+							<div class="activator card-content white-text center">
+							  <span class="card-title"><h3>$49</h3><h4>Unlimited</h4></span>
+							  <p class="left-align">Access as many full and targeted tests as you want.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et magna orci. Maecenas id nibh id nisl suscipit varius in quis erat. Sed vel suscipit purus.</p><br><p class="left-align">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et magna orci. Maecenas id nibh id nisl suscipit varius in quis erat. Sed vel suscipit purus.</p>
+							  <div class="card-action">
+								<a class="waves-effect waves-light btn">Purchase</a>
+							  </div>
+							</div>
+						  </div>
+						</li>
+						</ul>
 	
-	function log(string) {
-		var log = document.getElementById('log');
-		log.innerHTML = string + '<br>' + log.innerHTML;
-	}
-</script>
-</body>
+	</div>
+	</div>
+		</main>
+		<footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+          </div>
+        </footer>
+            
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<!-- Compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script>
+			$( document ).ready(function() {
+				$('#nav-top').pushpin({ top: window.innerHeight / 2 });
+				$('.question-wrapper').pushpin({ top: $('#quiz').offset().top, bottom: $('#quiz').offset().top + $('#quiz').height() - $('.question-wrapper').height() - $('#nav-top').height() + 750,offset: $('#nav-top').height() });
+
+				$('.scrollspy').scrollSpy({ scrollOffset:$('#nav-top').height() });
+				$('.scrollspy2').scrollSpy({ scrollOffset: 0, throttle:10 }).on('scrollSpy:enter', function() { 			
+					if( $('.question-wrapper .active').position()) {
+						offset = $('.question-wrapper .active').position().top;
+						maxHeight = $('#quiz').offset().top + $('#quiz').height() - $(window).scrollTop() - $('#nav-top').height();
+						console.log(maxHeight);
+						$('.question-wrapper').animate({ maxHeight: maxHeight  }, {duration: 200, queue: false, easing: 'easeOutCubic'});
+						$('.question-wrapper > ul').animate({ top: -offset  }, {duration: 200, queue: false, easing: 'easeOutCubic'});
+					}
+				}).on('scrollSpy:exit', function() { 			
+					if( $('.question-wrapper .active').position()) {
+						offset = $('.question-wrapper .active').position().top;
+						maxHeight = $('#quiz').offset().top + $('#quiz').height() - $(window).scrollTop() - $('#nav-top').height();
+						console.log(maxHeight);
+						$('.question-wrapper').animate({ maxHeight: maxHeight  }, {duration: 200, queue: false, easing: 'easeOutCubic'});
+						$('.question-wrapper > ul').animate({ top: -offset }, {duration: 200, queue: false, easing: 'easeOutCubic'});
+					}
+				});
+				
+				console.log($('.scrollspy2').scrollSpy());
+				$(".button-collapse").sideNav({ closeOnClick: true});
+				$('.slider').slider({
+					height: window.innerHeight,
+					indicators: false
+				});
+				$('.slider').slider('prev');
+				$('.slider').slider('next');
+				var options = [{
+					selector: '#content1', offset: 400, callback: function(e) {
+						Materialize.showStaggeredList('#staggered-facts');
+						Materialize.showStaggeredList('#staggered-quotes');
+					}
+				}];
+			   Materialize.scrollFire(options);
+			});
+			
+			
+			
+google.charts.load('current', {'packages':['sankey','timeline']});
+google.charts.setOnLoadCallback(drawChart);  
+
+function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Response');
+        data.addColumn('string', 'Question type');
+        data.addColumn('number', 'Responses');
+        data.addRows([
+          [ 'Correct', 'Production of Writing', 2 ],
+          [ 'Correct', 'Knowledge of Language', 3 ],
+          [ 'Correct', 'Conventions of Standard English', 5 ],
+          [ 'Incorrect', 'Production of Writing', 3 ],
+          [ 'Incorrect', 'Knowledge of Language', 2 ],
+          [ 'Incorrect', 'Conventions of Standard English', 1 ]
+        ]);
+
+        // Sets chart options.
+        var options = {
+			width: 600,
+			sankey: {
+				node: { 
+					label: { 
+						fontName: 'Roboto',
+						fontSize: 0,
+						labelPadding: 30,
+						color: 'transparent'
+					}
+				},
+				link: { 
+					colorMode: "gradient" 
+				}
+			}
+		};
+
+        // Instantiates and draws our chart, passing in some options.
+        var chart = new google.visualization.Sankey(document.getElementById('sankey'));
+        chart.draw(data, options);
+		
+		var container = document.getElementById('timeline');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+		
+		dataTable.addColumn({ type: 'string', id: 'President' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+        dataTable.addRows([
+			[ 'Washington', new Date(1789, 3, 30), new Date(1797, 2, 4) ],
+			[ 'Adams',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
+			[ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]
+		]);
+		
+		chart.draw(dataTable);
+
+      }
+	  
+	  
+	  
+	  
+	  
+		</script>
+	</body>
 </html>
